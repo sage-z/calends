@@ -1,21 +1,23 @@
 {
-    "compilerOptions": {
-      "allowJs": true,
-      "jsx": "react",
-      "module": "commonjs",
-      "skipLibCheck": true,
-      "esModuleInterop": true,
-      "noImplicitAny": true,
-      "sourceMap": true,
-      "baseUrl": ".",
-      "outDir": "dist",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "paths": {
-        "*": ["node_modules/*"]
-      }
-    },
-    "include": [
-      "app/**/*"
-    ]
-  }
+  "compilerOptions": {
+    "allowJs": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "paths": {
+      "*": ["node_modules/*"],
+      "@": ["."],
+      "components/*": ["app/components/*"],
+      "scss/*": ["app/scss/*"]
+    }
+  },
+  "include": ["app/**/*"]
+}

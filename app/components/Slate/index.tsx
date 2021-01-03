@@ -47,7 +47,7 @@ const RichTextExample = () => {
           for (const hotkey in HOTKEYS) {
             if (isHotkey(hotkey, event as any)) {
               event.preventDefault()
-              const mark = HOTKEYS[hotkey]
+              const mark:string = HOTKEYS[hotkey]
               toggleMark(editor, mark)
             }
           }
@@ -58,7 +58,7 @@ const RichTextExample = () => {
   )
 }
 
-const toggleBlock = (editor, format) => {
+const toggleBlock = (editor: any, format: any) => {
   const isActive = isBlockActive(editor, format)
   const isList = LIST_TYPES.includes(format)
 
@@ -72,12 +72,12 @@ const toggleBlock = (editor, format) => {
   })
 
   if (!isActive && isList) {
-    const block = { type: format, children: [] }
+    const block: any = { type: format, children: [] }
     Transforms.wrapNodes(editor, block)
   }
 }
 
-const toggleMark = (editor, format) => {
+const toggleMark = (editor: any, format: any) => {
   const isActive = isMarkActive(editor, format)
 
   if (isActive) {
@@ -87,20 +87,20 @@ const toggleMark = (editor, format) => {
   }
 }
 
-const isBlockActive = (editor, format) => {
-  const [match] = Editor.nodes(editor, {
+const isBlockActive = (editor: any, format: any) => {
+  const [match]: any = Editor.nodes(editor, {
     match: n => n.type === format,
   })
 
   return !!match
 }
 
-const isMarkActive = (editor, format) => {
+const isMarkActive = (editor: any, format: any) => {
   const marks = Editor.marks(editor)
   return marks ? marks[format] === true : false
 }
 
-const Element = ({ attributes, children, element }) => {
+const Element = ({ attributes, children, element }: any) => {
   switch (element.type) {
     case 'block-quote':
       return <blockquote {...attributes}>{children}</blockquote>
@@ -119,7 +119,7 @@ const Element = ({ attributes, children, element }) => {
   }
 }
 
-const Leaf = ({ attributes, children, leaf }) => {
+const Leaf = ({ attributes, children, leaf }: any) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>
   }
@@ -139,12 +139,12 @@ const Leaf = ({ attributes, children, leaf }) => {
   return <span {...attributes}>{children}</span>
 }
 
-const BlockButton = ({ format, icon }) => {
+const BlockButton = ({ format, icon }: any) => {
   const editor = useSlate()
   return (
     <Button
       active={isBlockActive(editor, format)}
-      onMouseDown={event => {
+      onMouseDown={(event: any) => {
         event.preventDefault()
         toggleBlock(editor, format)
       }}
@@ -154,12 +154,12 @@ const BlockButton = ({ format, icon }) => {
   )
 }
 
-const MarkButton = ({ format, icon }) => {
+const MarkButton = ({ format, icon }: {format:string, icon: string}) => {
   const editor = useSlate()
   return (
     <Button
       active={isMarkActive(editor, format)}
-      onMouseDown={event => {
+      onMouseDown={(event: any) => {
         event.preventDefault()
         toggleMark(editor, format)
       }}

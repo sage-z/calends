@@ -57,7 +57,7 @@ export const EditorValue = React.forwardRef(
     ref: Ref<OrNull<null>>
   ) => {
     const textLines = value.document.nodes
-      .map(node => node.text)
+      .map((node:any) => node.text)
       .toArray()
       .join('\n')
     return (
@@ -166,7 +166,7 @@ export const Menu = React.forwardRef(
   )
 )
 
-export const Portal = ({ children }) => {
+export const Portal = ({ children }:{ children:any }) => {
   return ReactDOM.createPortal(children, document.body)
 }
 
