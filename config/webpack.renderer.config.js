@@ -1,6 +1,9 @@
 const rules = require('./webpack.rules');
 const plugins = require('./webpack.plugins');
 const path = require('path')
+const log = require('electron-log')
+log.transports.file.level = false;
+log.transports.console.level = 'debug';
 rules.push({
   test: /\.css$/,
   use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
@@ -36,13 +39,26 @@ rules.push({
 ] }
 );
 
+function resolve (dir) {
+  // path.join(__dirname, "..", dir)
+  return path.join(process.cwd(), dir)
+}
+
 module.exports = {
   module: {
     rules,
   },
   plugins: plugins,
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css']
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],  
+    alias: {
+      "@": resolve("app/components"),
+      "core": resolve("app/core"),
+      "hooks": resolve("app/hooks"),
+      "scss": resolve("app/scss"),
+      "tools": resolve("app/tools"),
+      "typings": resolve("app/typings")
+      }
   },
   // alias: {
   //   "scss": path.resolve(__dirname, "app/scss")

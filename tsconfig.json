@@ -14,8 +14,9 @@
     "suppressImplicitAnyIndexErrors": true,
     "paths": {
       "*": ["node_modules/*"],
-      "@": ["."],
-      "components/*": ["app/components/*"],
+      "@/*": ["app/components/*"],
+      "tools/*": ["app/tools/*"],
+      "hooks/*": ["app/hooks/*"],
       "scss/*": ["app/scss/*"]
     }
   },
