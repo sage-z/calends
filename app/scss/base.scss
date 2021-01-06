@@ -67,7 +67,7 @@ h6 { font-size: 12px; }
 
 .window-content {
   position: relative;
-  overflow-y: auto;
+  overflow: hidden;
 	display: flex;
   flex: 1;
 }

@@ -7,7 +7,6 @@ interface CssExports {
   'toolbar': string;
   'toolbar-actions': string;
   'toolbar-borderless': string;
-  'toolbar-footer': string;
   'toolbar-header': string;
 }
 export const cssExports: CssExports;

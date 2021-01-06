@@ -16,16 +16,25 @@
   position: relative;
   overflow-y: auto;
   flex: 1;
-  border-left: 1px solid $border-color;
-
-  &:first-child {
-    border-left: 0;
-  }
 }
 
 .pane-sm {
   max-width: 220px;
   min-width: 150px;
+
+  // border-right: 1px solid $border-color;
+
+  &:after {
+    height: 100%;
+    width: 1px;
+    content: '';
+    &:hover {
+      cursor: wait;
+    }
+  }
+  // &:first-child {
+  //   border-right: 0;
+  // }
 }
 
 .pane-mini {

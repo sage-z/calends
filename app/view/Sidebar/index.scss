@@ -1,0 +1,22 @@
+.side{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+
+    .header {
+        width: 100%;
+        background-color: black;
+        height: 60px;
+    }
+    .body {
+        height: 100%;
+        /* flex: 1; */
+        display: flex;
+        .bar {
+            width: 50px;
+        }
+        .context{
+            flex: 1;
+        }
+    }
+}
