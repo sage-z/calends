@@ -1,6 +1,6 @@
 {
-  "name": "calends",
-  "productName": "calends",
+  "name": "Calends",
+  "productName": "Calends",
   "version": "0.1.0",
   "description": "It's just an editor",
   "main": ".webpack/main",
@@ -71,7 +71,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "calends"
+            "name": "Calends"
           }
         },
         {

@@ -17,7 +17,8 @@
       "@/*": ["app/components/*"],
       "tools/*": ["app/tools/*"],
       "hooks/*": ["app/hooks/*"],
-      "scss/*": ["app/scss/*"]
+      "scss/*": ["app/scss/*"],
+      "core/*": ["app/core/*"]
     }
   },
   "include": ["app/**/*"]

@@ -39,11 +39,11 @@ const RichTextExample = () => {
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
         spellCheck
         autoFocus
         onKeyDown={event => {
-          console.log(event)
+          // console.log(event)
+          console.log(editor.history)
           for (const hotkey in HOTKEYS) {
             if (isHotkey(hotkey, event as any)) {
               event.preventDefault()

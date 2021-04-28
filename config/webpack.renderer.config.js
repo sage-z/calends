@@ -57,7 +57,8 @@ module.exports = {
       "hooks": resolve("app/hooks"),
       "scss": resolve("app/scss"),
       "tools": resolve("app/tools"),
-      "typings": resolve("app/typings")
+      "typings": resolve("app/typings"),
+      "core": resolve("app/core")
       }
   },
   // alias: {

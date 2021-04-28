@@ -8,6 +8,7 @@ import styles from './index.scss';
 
 function DraggleLayout({
   children, // 两列布局
+  min = 0, // 左侧最小宽度
   max = Infinity, // 左侧最大宽度
   containerWidth = 0, // 容器宽度
   containerHeight = 0, // 容器高度
@@ -24,9 +25,7 @@ function DraggleLayout({
     {
       onMouseMove: ({ x, y }:any) => {
         let _x = x;
-        console.log(containerWidth)
-        // if (_x < min) _x = min;
-        if ( _x < 50 ) _x = 0;
+        if (_x < min) _x = min;
         if (_x > max) _x = max;
         if (onWidthChange) onWidthChange(_x);
         setPosition({ x: _x, y });

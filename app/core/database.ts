@@ -33,9 +33,8 @@ async function createDatabase(name:string, adapter:any) {
     });
 
     console.log('creating hero-collection..');
-    await db.collection({
-        name: 'heroes',
-        schema: heroSchema
+    await db.addCollections({
+        heroes : {schema: heroSchema}
     });
 
     return db;
