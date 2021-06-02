@@ -1,6 +1,6 @@
 const rules = require('./webpack.rules');
 const plugins = require('./webpack.plugins');
-const path = require('path')
+const alias = require('./webpack.alias');
 const log = require('electron-log')
 log.transports.file.level = false;
 log.transports.console.level = 'debug';
@@ -39,29 +39,19 @@ rules.push({
 ] }
 );
 
-function resolve (dir) {
-  // path.join(__dirname, "..", dir)
-  return path.join(process.cwd(), dir)
-}
 
 module.exports = {
   module: {
     rules,
   },
   plugins: plugins,
+  // devtool: false,
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],  
-    alias: {
-      "@": resolve("app/components"),
-      "core": resolve("app/core"),
-      "hooks": resolve("app/hooks"),
-      "scss": resolve("app/scss"),
-      "tools": resolve("app/tools"),
-      "typings": resolve("app/typings"),
-      "core": resolve("app/core")
-      }
-  },
-  // alias: {
-  //   "scss": path.resolve(__dirname, "app/scss")
-  // }
+    alias,
+    fallback: { 
+      "crypto": require.resolve("crypto-browserify"),
+      "stream": require.resolve("stream-browserify")
+    },
+  }
 };

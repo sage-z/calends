@@ -1,5 +1,11 @@
 
 const path = require('path')
+const webpack = require("webpack");
+const rules = require('./webpack.rules');
+const alias = require('./webpack.alias');
+const log = require('electron-log')
+log.transports.file.level = false;
+log.transports.console.level = 'debug';
 
 module.exports = {
   /**
@@ -9,13 +15,11 @@ module.exports = {
   entry: './app/main.ts',
   // Put your normal webpack config below here
   module: {
-    rules: require('./webpack.rules'),
+    rules,
   },
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],  
-    alias: {
-        "components": "app/components",
-  
-      }
-  }
+    alias
+  },
+  // plugins: [new webpack.ExternalsPlugin("commonjs", ["leveldown"])]
 };

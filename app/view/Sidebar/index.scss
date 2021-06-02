@@ -1,25 +1,12 @@
 .side{
     height: 100%;
-    display: flex;
-    flex-flow: column;
-
-    .header {
-        width: 100%;
-        background-color: black;
-        height: 60px;
-    }
-    .body {
-        height: 100%;
-        /* flex: 1; */
-        overflow-y: auto;
-        .item {
-            height:20px;
-            display: flex;
-
-            &:hover {
-                background-color: rgba($color: #000000, $alpha: .2);
-            }
+    overflow-y: auto;
+    .item {
+        height:20px;
+        display: flex;
+        cursor:pointer;
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: .2);
         }
-
     }
 }

@@ -1,16 +1,21 @@
-import React, { Component, useState } from "react";
+import * as React from 'react'
+import { Component, useState } from "react";
+import {render} from 'react-dom';
 import Footer from "./Footer";
-import DraggleLayout from "@/DraggleLayout";
+import BasicLayout from "layouts/BasicLayout";
 import Sidebar from "./Sidebar";
 import Tabpane from "./Tabpane";
+import Navigation from './Navigation';
 import baseStyles from "../scss/base.scss";
 import barsStyles from "../scss/bars.scss";
 import gridStyles from "../scss/grid.scss";
 
-export default () => {
+
+
+
+const App = () => {
   // const [width, setWidth] = useState(50);
-  const width = document.body.clientWidth
-  console.log(document.body.clientWidth)
+  const width = document.body.clientWidth -50
   return (
     <div className={baseStyles.window}>
       <header
@@ -19,29 +24,25 @@ export default () => {
         <h1 className={barsStyles.title}>Header</h1>
       </header>
       <div className={baseStyles["window-content"]}>
-      <div style={{width:'50px'}}>icon</div>
+        <Navigation />
         <div className={gridStyles["pane-group"]} style={{left:'50px'}}>
-          <DraggleLayout
+          <BasicLayout
             containerWidth={width}
             containerHeight={"100%"}
             initLeftWidth={280}
-            // onWidthChange={(w: any) => setWidth(w)}
-            handler={     
-              <div
-                style={{
-                  width: 1,
-                  height: "100%",
-                  background: "rgb(77, 81, 100)",
-                }}
-              />
-            }
           >
             <Sidebar />
             <Tabpane />
-          </DraggleLayout>
+          </BasicLayout>
         </div>
       </div>
       <Footer />
     </div>
   );
 };
+
+
+export default function AppRender() {
+  render(<App />, document.getElementById("root"));
+//   ReactDOM.render(<App />, document.body);
+}

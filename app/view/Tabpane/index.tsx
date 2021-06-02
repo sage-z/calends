@@ -1,10 +1,14 @@
-import React from 'react'
-import Slate from '@/Slate'
-import Tabs from '@/Tabs'
+import * as React from 'react';
+import Editor from "@/Editor";
+import Tabs from "./Tabs";
 
-export default ()=>{
-    return <div>
-        <Tabs />
-        <Slate />
+export default () => {
+  return (
+    <div>
+      <Tabs />
+      <div style={{ paddingTop: 32 }}>
+        <Editor />
+      </div>
     </div>
-}
+  );
+};

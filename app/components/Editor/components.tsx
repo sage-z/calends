@@ -1,5 +1,6 @@
-import React, { Ref, PropsWithChildren } from 'react'
-import ReactDOM from 'react-dom'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import { Ref, PropsWithChildren } from 'react'
 import { cx, css } from '@emotion/css'
 
 interface BaseProps {
@@ -181,9 +182,7 @@ export const Toolbar = React.forwardRef(
       className={cx(
         className,
         css`
-          position: relative;
-          padding: 1px 18px 17px;
-          margin: 0 -20px;
+          padding: 8px 18px 8px;
           border-bottom: 2px solid #eee;
           margin-bottom: 20px;
         `
@@ -191,3 +190,9 @@ export const Toolbar = React.forwardRef(
     />
   )
 )
+// import { cx, css } from '@emotion/css'
+
+// className={css`
+// height: calc(100vh - 135px);
+// overflow-y: auto;
+// `}

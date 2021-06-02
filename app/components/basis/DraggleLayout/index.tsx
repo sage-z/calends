@@ -1,14 +1,13 @@
 // 拖拽组件
 // 考察了 [react-grid-layout](https://www.npmjs.com/package/react-grid-layout) 觉得不太适合
 // 选用自 https://github.com/Lemonreds/react-components/blob/0a8955eabdcb44fcfce82f480f434bf294947b5a/src/components/DraggleLayout/DraggleLayout.jsx
-
-import React, { useRef, useState } from 'react';
+import * as React from 'react'
+import { useRef, useState } from 'react';
 import useDraggable from 'hooks/useDraggable';
 import styles from './index.scss';
 
-function DraggleLayout({
+export function DraggleLayout({
   children, // 两列布局
-  min = 0, // 左侧最小宽度
   max = Infinity, // 左侧最大宽度
   containerWidth = 0, // 容器宽度
   containerHeight = 0, // 容器高度
@@ -25,7 +24,9 @@ function DraggleLayout({
     {
       onMouseMove: ({ x, y }:any) => {
         let _x = x;
-        if (_x < min) _x = min;
+        console.log(containerWidth)
+        // if (_x < min) _x = min;
+        if ( _x < 50 ) _x = 0;
         if (_x > max) _x = max;
         if (onWidthChange) onWidthChange(_x);
         setPosition({ x: _x, y });
