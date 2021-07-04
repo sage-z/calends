@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron';
+import {is} from 'electron-util';
 import * as path from 'path';
 // require('./core/bootstrap')
 
@@ -23,21 +24,27 @@ const createWindow = (): void => {
     titleBarStyle: 'hidden',
     backgroundColor: '#2e2c29',
     webPreferences: {
-        nodeIntegration: true,
+        // nodeIntegration: true,
+        // nodeIntegration: false, // is default value after Electron v5
+        // contextIsolation: true, // protect against prototype pollution
+        // enableRemoteModule: false,
         preload: path.join(process.cwd(), 'public/js/preload.js')
     }
   });
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  mainWindow.on('ready-to-show',()=>{
-      mainWindow.show();
-  })
+  // mainWindow.on('ready-to-show',()=>{
+  //     mainWindow.show();
+  // })
 
   // todo 暂时方案
   mainWindow.on('resize', () => {
     mainWindow.reload();
   })
 
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('ping', 'whoooooooh!');
+  })
   // mainWindow['custom'] = {
   //     dbSuffix: 3223
   // };
@@ -45,7 +52,9 @@ const createWindow = (): void => {
   // mainWindow.loadFile("index.html")
   // mainWindow.loadURL("http://localhost:3000/main_window");
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if (is.development){
+    mainWindow.webContents.openDevTools();
+  }
 };
 
 // This method will be called when Electron has finished

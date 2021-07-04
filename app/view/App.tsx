@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Component, useState } from "react";
+import { Component, useState, useEffect } from "react";
 import {render} from 'react-dom';
 import Footer from "./Footer";
 import BasicLayout from "layouts/BasicLayout";
@@ -15,6 +15,7 @@ import gridStyles from "../scss/grid.scss";
 
 const App = () => {
   // const [width, setWidth] = useState(50);
+
   const width = document.body.clientWidth -50
   return (
     <div className={baseStyles.window}>
