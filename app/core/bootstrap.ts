@@ -1,27 +1,19 @@
-import database from '../database';
-
-console.log('log in bootstrap')
-
-const { addRxPlugin } = require('rxdb');
-// addRxPlugin(require('rxdb/plugins/server').RxDBServerPlugin);
-// addRxPlugin(require('pouchdb-adapter-memory'));
-// addRxPlugin(require('pouchdb-adapter-node-websql'));
-
+import { getDatabase } from '../database/server';
 
 (async () => {
-    const dbSuffix = new Date().getTime(); // we add a random timestamp in dev-mode to reset the database on each start
+    try {
+        // const db = await getDatabase();
 
-    // const db = await database.getDatabase(
-    //     '',
-    //     'websql',
-    //     'node'
-    // );
-
-    // await db.server({
-    //     path: '/db',
-    //     port: 10102,
-    //     cors: true
-    // });
+        // db.books.insert(
+        //     {
+        //         name: new Date().toLocaleTimeString(),
+        //         color: '#032c33'
+        //     });
+        
+        
+    } catch (error) {
+        console.log('error', error)
+    }
 })()
 
 

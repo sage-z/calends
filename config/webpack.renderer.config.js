@@ -1,4 +1,5 @@
 const rules = require('./webpack.rules');
+const webpack = require("webpack");
 const plugins = require('./webpack.plugins');
 const alias = require('./webpack.alias');
 const log = require('electron-log')
@@ -51,7 +52,9 @@ module.exports = {
     alias,
     fallback: { 
       "crypto": require.resolve("crypto-browserify"),
-      "stream": require.resolve("stream-browserify")
+      "stream": require.resolve("stream-browserify"),
+      // "assert": require.resolve("assert/")
+      // "assert": false
     },
   }
 };

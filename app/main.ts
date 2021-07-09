@@ -1,7 +1,9 @@
 import { app, BrowserWindow } from 'electron';
 import {is} from 'electron-util';
 import * as path from 'path';
-// require('./core/bootstrap')
+import { take } from 'rxjs/operators';
+import { getDatabase } from './database/server';
+import './core/bootstrap'
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
@@ -12,9 +14,8 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 const windows = [];
 
 
-const createWindow = (): void => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
+const createWindow = (name?: string): void => {
+  const win = new BrowserWindow({
     frame: false,
     // show: false,
     height: 800,
@@ -24,43 +25,61 @@ const createWindow = (): void => {
     titleBarStyle: 'hidden',
     backgroundColor: '#2e2c29',
     webPreferences: {
-        // nodeIntegration: true,
-        // nodeIntegration: false, // is default value after Electron v5
-        // contextIsolation: true, // protect against prototype pollution
-        // enableRemoteModule: false,
         preload: path.join(process.cwd(), 'public/js/preload.js')
     }
   });
 
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  // mainWindow.on('ready-to-show',()=>{
-  //     mainWindow.show();
+  win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  // win.on('ready-to-show',()=>{
+  //     win.show();
   // })
 
   // todo 暂时方案
-  mainWindow.on('resize', () => {
-    mainWindow.reload();
+  win.on('resize', () => {
+    win.reload();
   })
 
-  mainWindow.webContents.on('did-finish-load', () => {
-    mainWindow.webContents.send('ping', 'whoooooooh!');
+  win.webContents.on('did-finish-load', () => {
+    win.webContents.send('ping', name);
   })
-  // mainWindow['custom'] = {
-  //     dbSuffix: 3223
-  // };
-  windows.push(mainWindow);
-  // mainWindow.loadFile("index.html")
-  // mainWindow.loadURL("http://localhost:3000/main_window");
-  // Open the DevTools.
+  
+  windows.push(win);
+  
   if (is.development){
-    mainWindow.webContents.openDevTools();
+    win.webContents.openDevTools();
   }
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', async ()=>{
+  const db = await getDatabase()
+
+  db.books.find().$.subscribe(books => {
+      console.log('main', books.length)
+  });
+
+const sub = db.books.find({ selector: {open: 1} }).$.pipe(take(1)).subscribe(books => {
+    console.log('main', books.length)
+    if(books.length){
+      books.forEach(doc => createWindow(doc.name));
+    } else {
+      createWindow()
+    }
+    sub.unsubscribe();
+});
+
+
+  // db.books.find({ selector: {open: 1} }).$.subscribe(books => {
+  //   console.log('### got books(' + books.length + '):');
+  //   // if(books.length){
+  //   //   books.forEach(doc => createWindow(doc.name));
+  //   // } else {
+  //     createWindow()
+  //   // }
+  // });
+});
 
 
 

@@ -21,5 +21,5 @@ module.exports = {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],  
     alias
   },
-  // plugins: [new webpack.ExternalsPlugin("commonjs", ["leveldown"])]
+  plugins: [new webpack.ExternalsPlugin("commonjs", ["leveldown"])]
 };

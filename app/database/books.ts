@@ -12,5 +12,5 @@ export default {
             type: 'string'
         }
     },
-    required: ['color']
+    required: []
 };
