@@ -8,6 +8,7 @@ import useDraggable from "hooks/useDraggable";
 import styles from "./index.scss";
 import { cx, css } from "@emotion/css";
 import { queryBooks } from "service/books";
+// import { Books } from '../../database/store'
 
 export function DraggleLayout({
   children, // 两列布局
@@ -53,6 +54,9 @@ export function DraggleLayout({
 
   useEffect(() => {
     queryBooks()
+    api.get_books()
+    .then(data => console.log(data))
+    // console.log('Books.store', Books.store)
     // let subscription = queryBooks().subscribe((result:any[]) => {
     //   // setBookList(result);
     //   console.log(result)
@@ -108,7 +112,9 @@ export function DraggleLayout({
                 height: 60px;
                 cursor: pointer;
               `}
-              onClick={() => setShowProjectList(true)}
+              onClick={() => {
+                api.get_books().then(data => console.log(data))
+                setShowProjectList(true)}}
             ></div>
             <div
               className={css`

@@ -1,30 +1,37 @@
 // const {clipboard, contextBridge, crashReporter, desktopCapturer, ipcRenderer, nativeImage, shell, webFrame, deprecate} =e. require('electron');
-// const { ipcRenderer } = require('electron');
+// import { Observable } from 'rxjs'
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld(
-  'ipcRenderer',
+  'api',
   {
-    on: async (callback) => {
+    getProjectName: async (callback) => {
         return new Promise((resolve,reject)=>{
-            ipcRenderer.on('ping', function(event, message){
-                if(callback) callback(message);
-                resolve(message);
+            ipcRenderer.once('getProjectName', function(event, params){
+                if(callback) callback(params);
+                resolve(params);
             })
         })
         
+    },
+    get_books: (someArgument) => {
+      return ipcRenderer.invoke('get_books', someArgument)
+      // return new Observable(observer=>{
+      //   const EVENT_NAME = ''
+      //   const listener = (event, params)=>{
+
+      //     observer.next(params);
+      //   }
+
+      //   ipcRenderer.send('subscribe', )
+      //   ipcRenderer.on(EVENT_NAME, listener)
+      //   return () => {
+      //     ipcRenderer.removeListener(EVENT_NAME, listener)
+      //   }
+      // })
+    },
+    add_books:(someArgument)=>{
+      return ipcRenderer.invoke('add_books', someArgument)
     }
   }
 )
-// window.ipcRenderer = ipcRenderer
-// Object.defineProperty(window, 'ipcRenderer', { writable: false })
-// window.clipboard=e.clipboard
-// window.contextBridge=e.contextBridge
-// window.crashReporter=e.crashReporter
-// window.desktopCapturer=e.desktopCapturer
-// window.nativeImage=e.nativeImage
-// window.shell=e.shell
-// window.webFrame=e.webFrame
-// window.deprecate=e.deprecate
-// Object.freeze(window)
-// console.log('window.ipcRenderer', window.ipcRenderer)

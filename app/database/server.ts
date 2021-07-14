@@ -3,8 +3,8 @@ import { is } from 'electron-util'
 import bookSchema from './books'
 import * as PouchdbAdapterLeveldb from 'pouchdb-adapter-leveldb';
 addRxPlugin(PouchdbAdapterLeveldb);
-import { RxDBServerPlugin } from 'rxdb/plugins/server';
-addRxPlugin(RxDBServerPlugin);
+// import { RxDBServerPlugin } from 'rxdb/plugins/server';
+// addRxPlugin(RxDBServerPlugin);
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder';
 addRxPlugin(RxDBQueryBuilderPlugin);
 import { RxDBEncryptionPlugin } from 'rxdb/plugins/encryption';
@@ -13,10 +13,8 @@ addRxPlugin(RxDBEncryptionPlugin);
 import { RxDBNoValidatePlugin } from 'rxdb/plugins/no-validate';
 // import { RxDBReplicationPlugin } from 'rxdb/plugins/replication';s
 
-// import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
-// addRxPlugin(RxDBDevModePlugin)
-// import { RxDBValidatePlugin } from 'rxdb/plugins/validate'
-// addRxPlugin(RxDBValidatePlugin)
+import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
+import { RxDBValidatePlugin } from 'rxdb/plugins/validate'
 
     // addRxPlugin(RxDBReplicationPlugin);
 
@@ -25,15 +23,11 @@ if (is.development) {
 
         // add dev-mode plugin
         // which does many checks and add full error-messages
-        import('rxdb/plugins/dev-mode').then(
-            module => addRxPlugin(module)
-        ),
+        addRxPlugin(RxDBDevModePlugin)
 
         // we use the schema-validation only in dev-mode
         // this validates each document if it is matching the jsonschema
-        import('rxdb/plugins/validate').then(
-            module => addRxPlugin(module)
-        )
+        addRxPlugin(RxDBValidatePlugin)
 } else {
     // in production we use the no-validate module instead of the schema-validation
     // to reduce the build-size
@@ -41,35 +35,42 @@ if (is.development) {
 }
 
 export async function createServerDatabase() {
-    const leveldown = require('leveldown');
-    const db = await createRxDatabase({
-        name: 'data/calends',
-        adapter: leveldown,
-        password: 'myLongAndStupidPassword'
-    });
-    await db.addCollections({
-        books: { schema: bookSchema }
-    });
-
-    db.books.insert(
-        {
-            name: new Date().toLocaleTimeString(),
-            color: '#032c33'
+    try {
+        
+        const leveldown = require('leveldown');
+        const db = await createRxDatabase({
+            name: 'data/calends',
+            adapter: leveldown,
+            password: 'myLongAndStupidPassword'
         });
+        await db.addCollections({
+            books: { schema: bookSchema }
+        });
+    
+        
+  const res = await db.books.insert({
+    name: new Date().toISOString(),
+    color: '#032c33',
+    open: 0
+});
+    
+            // console.log('res', db.books)
+        // db.server({
+        //     path: '/db',
+        //     port: 10102,
+        //     cors: true,
+        //     startServer: true, // (optional), start express server
+        //     // options of the pouchdb express server
+        //     // pouchdbExpressOptions: {
+        //     //     inMemoryConfig: true, // do not write a config.json
+        //     //     logPath: '/tmp/rxdb-angular-server-log.txt' // save logs in tmp folder
+        //     // }
+        // });
+        return db;
+    } catch (error) {
+        console.log('error', error)
+    }
 
-    db.server({
-        path: '/db',
-        port: 10102,
-        cors: true,
-        startServer: true, // (optional), start express server
-        // options of the pouchdb express server
-        // pouchdbExpressOptions: {
-        //     inMemoryConfig: true, // do not write a config.json
-        //     logPath: '/tmp/rxdb-angular-server-log.txt' // save logs in tmp folder
-        // }
-    });
-
-    return db;
 }
 
 

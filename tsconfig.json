@@ -21,6 +21,7 @@
       "core/*": ["app/core/*"],
       "layouts/*": ["app/layouts/*"],
       "service/*": ["app/service/*"],
+      "db/*": ["app/database/*"],
       "*": ["node_modules/*"]
     }
   },

@@ -1,28 +1,19 @@
 
 import { getDatabase } from './database';
 import render from './view/App';
-// import {is} from 'electron-util';
-// import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
-// import { createRxDatabase, addRxPlugin, RxDatabase } from "rxdb/plugins/core"
-// addRxPlugin(PouchdbAdapterIdb);
-const syncURL = 'http://localhost:10102/db/books';
-       
-// import * as is from 'tools/is';
+
 import '../public/css/font.css'
 
 (async function run() {
 
-    const bookname = await ipcRenderer.on();
+    // 获取初始化配置
+    const bookname = await api.getProjectName();
 
-    const db = await getDatabase( bookname?bookname:'common' );
+    // 初始化数据库
+    await getDatabase( bookname?bookname:'common' );
 
-    const syncState = await db.books.sync({ 
-        remote: syncURL,
-        direction: {
-            pull: true,
-            push: true
-        }
-    });
+    // 初始化插件
+
 
     render()
 })();

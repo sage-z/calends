@@ -12,6 +12,7 @@ module.exports = {
     "tools": resolve("app/tools"),
     "typings": resolve("app/typings"),
     "layouts": resolve("app/layouts"),
+    "db": resolve("app/database"),
     "service": resolve("app/service")
 };
   

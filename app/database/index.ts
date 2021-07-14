@@ -19,36 +19,12 @@ addRxPlugin(RxDBQueryBuilderPlugin);
 import bookSchema from './books'
 
 
-/**
- * Loads RxDB plugins
- */
-async function loadRxDBPlugins(): Promise<void> {
-    /**
-     * to reduce the build-size,
-     * we use some modules in dev-mode only
-     */
-    if (false) {
-        await Promise.all([
+// dev
 
-            // add dev-mode plugin
-            // which does many checks and add full error-messages
-            import('rxdb/plugins/dev-mode').then(
-                module => addRxPlugin(module)
-            ),
-
-            // we use the schema-validation only in dev-mode
-            // this validates each document if it is matching the jsonschema
-            import('rxdb/plugins/validate').then(
-                module => addRxPlugin(module)
-            )
-        ]);
-    } else {
-        // in production we use the no-validate module instead of the schema-validation
-        // to reduce the build-size
-        addRxPlugin(RxDBNoValidatePlugin);
-    }
-
-}
+import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
+// import { RxDBValidatePlugin } from 'rxdb/plugins/validate'
+addRxPlugin(RxDBDevModePlugin)
+// addRxPlugin(RxDBValidatePlugin)
 
 
 
@@ -57,7 +33,7 @@ async function createDatabase(name: string) {
     // then we also need the leader election
 
     const db = await createRxDatabase({
-        name: 'data/calends_' + name,
+        name: 'calends_' + name,
         adapter: 'idb',
         password: 'myLongAndStupidPassword'
     });

@@ -2,7 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import {is} from 'electron-util';
 import * as path from 'path';
 import { take } from 'rxjs/operators';
-import { getDatabase } from './database/server';
+import { Books } from './database/store';
 import './core/bootstrap'
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -40,7 +40,7 @@ const createWindow = (name?: string): void => {
   })
 
   win.webContents.on('did-finish-load', () => {
-    win.webContents.send('ping', name);
+    win.webContents.send('getProjectName', name);
   })
   
   windows.push(win);
@@ -54,21 +54,21 @@ const createWindow = (name?: string): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async ()=>{
-  const db = await getDatabase()
+  // const db = await getDatabase()
+  console.log('Books.store', Books.store)
+// db.books.find().$.subscribe(books => {
+//       console.log('main', books.length)
+//   });
 
-  db.books.find().$.subscribe(books => {
-      console.log('main', books.length)
-  });
-
-const sub = db.books.find({ selector: {open: 1} }).$.pipe(take(1)).subscribe(books => {
-    console.log('main', books.length)
-    if(books.length){
-      books.forEach(doc => createWindow(doc.name));
-    } else {
+// const sub = db.books.find({ selector: {open: 1} }).$.pipe(take(1)).subscribe(books => {
+//     console.log('main', books.length)
+//     if(books.length){
+//       books.forEach(doc => createWindow(doc.name));
+//     } else {
       createWindow()
-    }
-    sub.unsubscribe();
-});
+//     }
+//     sub.unsubscribe();
+// });
 
 
   // db.books.find({ selector: {open: 1} }).$.subscribe(books => {

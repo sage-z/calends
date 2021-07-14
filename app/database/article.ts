@@ -1,5 +1,5 @@
 export default {
-    title: 'book schema',
+    title: 'article schema',
     description: 'describes a simple book',
     version: 0,
     type: 'object',
