@@ -8,7 +8,7 @@ export default ({
 }:any) => {
 
   return (
-    <div style={{width:'50px', position:'relative'}}>
+    <div style={{width:'50px', position:'relative', background: '#555'}}>
       <div style={{
           position: 'absolute',
           top: 0,
@@ -16,9 +16,6 @@ export default ({
           }}>
         {[
           'chrome_reader_mode',
-          'chrome_reader_mode',
-          'chrome_reader_mode',
-          'chrome_reader_mode'
         ].map((item, index)=> <Button key={index} className={css`
           display: block;
           width: 36px;
@@ -38,9 +35,6 @@ export default ({
         
       {[
           'chrome_reader_mode',
-          'chrome_reader_mode',
-          'chrome_reader_mode',
-          'chrome_reader_mode'
         ].map((item, index) => <Button key={index} className={css`
           display: block;
           width: 36px;

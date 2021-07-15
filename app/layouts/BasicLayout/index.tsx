@@ -55,7 +55,8 @@ export function DraggleLayout({
   useEffect(() => {
     queryBooks()
     api.get_books()
-    .then(data => console.log(data))
+    .then(data => setBookList(data))
+    
     // console.log('Books.store', Books.store)
     // let subscription = queryBooks().subscribe((result:any[]) => {
     //   // setBookList(result);
@@ -75,13 +76,12 @@ export function DraggleLayout({
           <div
             className={css`
               height: 100%;
-              background: #ff9;
+              background: #333;
             `}
           >
             <div
               className={css`
                 width: 100%;
-                background-color: #ff9;
                 height: 60px;
                 cursor: pointer;
               `}
@@ -92,7 +92,10 @@ export function DraggleLayout({
             <button>导入</button>
             <div>
               {bookList.map(item => {
-                <div>{item}</div>
+                return <div
+                className={css`    
+                  height: 80px;
+                `} key={item.name} >{item.name}</div>
               })}
 
             </div>
@@ -108,12 +111,12 @@ export function DraggleLayout({
             <div
               className={css`
                 width: 100%;
-                background-color: black;
                 height: 60px;
                 cursor: pointer;
               `}
               onClick={() => {
-                api.get_books().then(data => console.log(data))
+                // api.get_books().then(data => console.log(data))
+                console.log(bookList)
                 setShowProjectList(true)}}
             ></div>
             <div
