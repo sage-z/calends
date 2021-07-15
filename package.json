@@ -112,7 +112,10 @@
                 {
                   "html": "./public/index.html",
                   "js": "./app/renderer.ts",
-                  "name": "main_window"
+                  "name": "main_window",
+                  "preload": {
+                    "js": "./app/api/index.ts"
+                  }
                 }
               ]
             }

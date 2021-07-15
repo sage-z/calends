@@ -1,11 +1,10 @@
 import { app, BrowserWindow } from 'electron';
 import {is} from 'electron-util';
-import * as path from 'path';
-import { take } from 'rxjs/operators';
 import { Books } from './database/store';
 import './core/bootstrap'
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
+declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -14,7 +13,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 const windows = [];
 
 
-const createWindow = (name?: string): void => {
+const createWindow = (name?: string): BrowserWindow => {
   const win = new BrowserWindow({
     frame: false,
     // show: false,
@@ -25,7 +24,8 @@ const createWindow = (name?: string): void => {
     titleBarStyle: 'hidden',
     backgroundColor: '#2e2c29',
     webPreferences: {
-        preload: path.join(process.cwd(), 'public/js/preload.js')
+        // preload: path.join(process.cwd(), 'public/js/preload.js')
+        preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     }
   });
 
@@ -43,11 +43,11 @@ const createWindow = (name?: string): void => {
     win.webContents.send('getProjectName', name);
   })
   
-  windows.push(win);
   
   if (is.development){
     win.webContents.openDevTools();
   }
+  return win
 };
 
 // This method will be called when Electron has finished
@@ -65,7 +65,8 @@ app.on('ready', async ()=>{
 //     if(books.length){
 //       books.forEach(doc => createWindow(doc.name));
 //     } else {
-      createWindow()
+      let win  = createWindow()
+      windows.push(win);
 //     }
 //     sub.unsubscribe();
 // });
